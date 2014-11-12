@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Os donos da Câmara</title>
+    <style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+</style>
+<script src="d3.v3.min.js"></script>
+
+</head>
+<body>
+
+<script>
+function dragstart(d) {
+  d3.select(this).classed("fixed", d.fixed = true);
+}
+var empresa = "JBS S/A"
+var data = null
+
+var width = 960,
+    height = 500;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-60)
+    .linkDistance(40)
+    .gravity(0.1)
+    .linkStrength(0.4)
+    .friction(0.9)
+    .chargeDistance(10000)
+    .size([width, height]);
+
+var drag = force.drag()
+    .on("dragstart", dragstart);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("jbs.json", function(error, graph) {
+    window.data = graph
+    //codigo acha o index da empresa em questão e deixa só os links e nodes ligados a ela
+
+ /*   index = graph.nodes.filter(function (d) { return (d.name == empresa )})[0].index
+    graph.links = graph.links.filter(function (d) { return d.source == index || d.target == index })
+    sobraram = [index] 
+    graph.links.forEach(function(d) { sobraram.push(d.source)})
+    graph.nodes = graph.nodes.filter(function (d) { console.log(d); return sobraram.indexOf(d.index) != -1 }) */
+
+   force
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .start();
+  var link = svg.selectAll(".link")
+      .data(graph.links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+  var max = d3.max(graph.nodes, function(d) { return d.valor; });
+  var min = d3.min(graph.nodes, function(d) { return d.valor; });
+
+  console.log(min)
+
+  var node = svg.selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", function (d) { if (d.group == 1) {return Math.max(50*(d.valor/54577777),5) } else { return 5}})
+      .style("fill", function(d) { return color(d.group); })
+      .call(drag);
+
+  node.append("title")
+      .text(function(d) { return d.name; });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+});
+
+</script>
+
+
+</body>
+</html>
