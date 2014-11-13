@@ -24,10 +24,10 @@ Selecione os doadores:
 <p>
  <select id="doadores" multiple="multiple" size="5" onChange="muda_empresa()">
     <option selected="true">JBS</option>
-    <option>CRBS  (AMBEV)</option>
+    <option>CRBS (AMBEV)</option>
     <option>GRUPO BRADESCO</option>
     <option>GRUPO VALE</option>
-    <option>text5</option>
+    <option>CONSTRUTORA ANDRADE GUTIERREZ</option>
  </select>
  <div id="grafico"></div>
 <script>
@@ -104,8 +104,8 @@ var width = 1500,
 var color = d3.scale.category20();
 
 var force = d3.layout.force()
-    .charge(-400)
-    .linkDistance(10)
+    .charge(-600)
+    .linkDistance(-50)
     .gravity(0.3)
     .linkStrength(0.45)
     .friction(0.4)
@@ -127,7 +127,7 @@ function atualizar() {
 
 function iniciar() {
     d3.json("jbs.json", function(error, dados) {
-        console.log(empresas)
+        console.log(dados)
         var svg = d3.select("body").append("svg")
             .attr("width", width)
             .attr("height", height);
