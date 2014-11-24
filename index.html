@@ -15,30 +15,110 @@
   stroke-opacity: .6;
 }
 
-</style>
-<script src="d3.v3.min.js"></script>
+#container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#empresas {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
+#grafico {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 40;
+}
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: auto;
+    height: auto;
+    padding: 6px;
+    font: 14px Arial;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+
+    </style>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/jquery-2.1.0.min.js"></script>
+
 
 </head>
 <body>
+<div id="container">
+<div id="empresas">
 Selecione os doadores:
 <p>
- <select id="doadores" multiple="multiple" size="5" onChange="muda_empresa()">
+ <select id="doadores" multiple="multiple" size="16 " onChange="muda_empresa()">
     <option selected="true">JBS</option>
-    <option>CRBS (AMBEV)</option>
     <option>GRUPO BRADESCO</option>
     <option>GRUPO VALE</option>
     <option>CONSTRUTORA ANDRADE GUTIERREZ</option>
- </select>
+     <option>CRBS (AMBEV)</option>
+    <option>CONSTRUTORA OAS</option>
+     <option>CONSTRUTORA QUEIROZ GALVÃO</option>
+     <option>UTC ENGENHARIA</option>
+     <option>CONSTRUTORA NORBERTO ODEBRECHT</option>
+     <option>ITAU UNIBANCO</option>
+     <option>AMIL ASSISTENCIA MEDICA INTERNACIONAL</option>
+     <option>GALVÃO ENGENHARIA</option>
+     <option>BRASKEM</option>
+     <option>COSAN LUBRIFICANTES E ESPECIALIDADES</option>
+     <option>CARIOCA CHRISTIANI NIELSEN ENGENHARIA</option>
+     <option>BANCO BTG PACTUAL</option>
+ </select></div>
  <div id="grafico"></div>
+</div>
 <script>
 
+var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
 var empresas = ["JBS"]
+var formatNumber = d3.format(",d")
 
 function muda_empresa(d) {
-    empresas = getValue()
+    var selecionados = getValue()
+    empresas = arruma_select(selecionados)
     atualizar()
 }
 
+function arruma_select(selecionados) {
+    var diferente = null
+    for (d in selecionados) {
+        if (empresas.indexOf(selecionados[d]) == -1) {
+            diferente = selecionados[d]
+        }
+    }
+    if (diferente != null) {
+        var temp = empresas
+        temp.push(diferente)
+
+    } else {
+        var temp = []
+        for (d in empresas) {
+            if (selecionados.indexOf(empresas[d]) == -1 ){
+                temp.push(empresas[d])
+            }
+        }
+    }
+    $("#doadores").val(temp)
+    return temp
+}
 function getValue() {
   var x=document.getElementById("doadores");
   var saida = []
@@ -61,39 +141,14 @@ function filtra_dados(deus) {
         var empresa = empresas[e]
         var teste = deus.links
         novos_links = teste.filter(function (d) { return d.empresa == empresa})
-        console.log(novos_links)
         links = links.concat(novos_links)
-        console.log(links)
-      /*  //codigo acha o index da empresa em questão e deixa só os links e nodes ligados a ela
-        var index_empresa = nodes.filter(function (d) { return (d.name == empresa )})[0].index
-        links = links.filter(function (d) { return d.empresa == empresa})
-        sobraram = [index_empresa] 
-        links.forEach(function(d) { sobraram.push(d.source)})
-        var nodes_novo = nodes.filter(function (d) { return sobraram.indexOf(d.index) != -1 }) 
-        var candidato = []
-        var destino = []
-        var links_novo = []
-        links.forEach( function (d) { candidato.push(d.candidato); })
-        candidato.forEach(function (d) { 
-            link = {}
-            link.candidato = d
-            link.empresa = empresa
-            link.target = index_empresa
-            link.source = busca_candidato(nodes_novo,d)
-            links_novo.push(link)
-        })
-        console.log(links_novo)
-        console.log(nodes_novo) 
-        */
     }
-    
     return [links,nodes ]
 }
 
 function busca_candidato(nodes,candidato) {
     var saida = null
     nodes.forEach(function (d) { if (d.name == candidato) { saida = d.index } })
-    console.log(saida)
     return saida
 }
 var arquivo = null
@@ -124,6 +179,18 @@ function atualizar() {
     iniciar()
 }
 
+function acha_cor(d) {
+    if (d.group ==1) {
+        return "#4d5266"
+    } else {
+        if (d.partido == "PT") return "#690000"
+        else if (d.partido == "PSDB") return "#1e2e66"
+        else if (d.partido == "PMDB") return "#6b4200"
+        else if (d.partido == "PSD") return "#4f5d15"
+        else if (d.partido == "PP") return "#a6546f"
+        else return "#666e87"
+    }
+}
 
 function iniciar() {
     d3.json("jbs.json", function(error, dados) {
@@ -154,14 +221,60 @@ function iniciar() {
           .data(graph.nodes)
         .enter().append("circle")
           .attr("class", "node")
-          .attr("r", function (d) { if (d.group == 1) {return Math.max(50*(d.valor/54577777),5) } else { return 5}})
-          .style("fill", function(d) { return color(d.group); })
+          .attr("r", function (d) { if (d.group == 1) {return Math.max(70*(d.valor/54577777),8) } else { return 5}})
+          .style("fill", function(d) {
+              //    return color(d.group);
+                  return acha_cor(d)
+              })
+          .style("stroke",function (d) {
+                  //return "#fff"
+                  return acha_cor(d)
+              })
+              .style("fill-opacity", function (d) {
+                  if (d.group ==1 ) return 1
+                  else return 0.35
+              })
+          .style("stroke-opacity",0.5)
+
           .call(drag);
 
       node.append("title")
           .text(function(d) { return d.name; });
+      node.on('mouseover', function(d) {
 
-      force.on("tick", function() {
+          div.transition()
+                  .duration(200)
+                  .style("opacity", 1);
+          if (d.group == 3) {
+              div.html(d.name + " ("+ d.partido+")")
+          } else {
+              div.html("<b>"+d.name+"</b><br>Total doado: R$"+formatNumber(Math.round(d.valor)).replace(",",".").replace(",","."))
+          }
+          div.style("left", (d3.event.pageX - 20) + "px")
+             .style("top", (d3.event.pageY - 50) + "px")})
+
+      node.on('mousemove', function(d) {
+          div.style("left", (d3.event.pageX - 20) + "px")
+              .style("top", (d3.event.pageY - 50) + "px");
+      })
+
+      node.on("mouseout", function(d) {
+          div.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+      });
+
+      node.on("click",function(d) {
+          if (d.group == 1) {
+              selecionados = $("#doadores").val()
+              if (selecionados.indexOf(d.name) == -1) selecionados.push(d.name)
+              else selecionados.pop(selecionados.indexOf(d.name) -1)
+              empresas = arruma_select(selecionados)
+              atualizar()
+          }
+      })
+
+        force.on("tick", function() {
         link.attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })
             .attr("x2", function(d) { return d.target.x; })
@@ -170,7 +283,7 @@ function iniciar() {
         node.attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
       });
-      window.svg = svg    
+      window.svg = svg
   })
       
 }
