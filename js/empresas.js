@@ -6,33 +6,10 @@ var empresas = ["JBS"]
 var formatNumber = d3.format(",d")
 
 function muda_empresa(d) {
-    var selecionados = getValue()
-    empresas = arruma_select(selecionados)
+    empresas = getValue()
     atualizar()
 }
 
-function arruma_select(selecionados) {
-    var diferente = null
-    for (d in selecionados) {
-        if (empresas.indexOf(selecionados[d]) == -1) {
-            diferente = selecionados[d]
-        }
-    }
-    if (diferente != null) {
-        var temp = empresas
-        temp.push(diferente)
-
-    } else {
-        var temp = []
-        for (d in empresas) {
-            if (selecionados.indexOf(empresas[d]) == -1 ){
-                temp.push(empresas[d])
-            }
-        }
-    }
-    $("#doadores").val(temp)
-    return temp
-}
 function getValue() {
   var x=document.getElementById("doadores");
   var saida = []
@@ -186,6 +163,7 @@ function iniciar() {
     });
 
     node.on("click",function(d) {
+        if (d3.event.defaultPrevented) return; // click suppressed
         if (d.group == 1) {
             selecionados = $("#doadores").val()
             if (selecionados == null) { selecionados = []}
@@ -215,7 +193,7 @@ function iniciar() {
           .attr("cy", function(d) { return d.y; });
     });
     window.svg = svg
-
+    $("#doadores").trigger("chosen:updated");
 }
 
 carrega_dados();

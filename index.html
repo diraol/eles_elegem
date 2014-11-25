@@ -163,8 +163,8 @@
     <!-- Cabeçalho -->
     <div class="container-fluid text-center titulo-header">
         <div class="col-sm-10 col-xs-12">
-            <h2>'empresas eleitoral'</h2>
-            <h4>O mapa das coligações para deputado federal em 2014</h4>
+            <h1>Os donos do Congresso</h1>
+            <h4>A bancada de cada um dos maiores doadores de campanha em 2014</h4>
         </div>
         <div class="col-sm-2 social-sharing visible-sm visible-md visible-lg">
             <!-- AddThis Button BEGIN -->
@@ -213,8 +213,7 @@
 </aside>
 
 <!-- AddThis Button END -->
-<footer class="col-xs-12 text-center">
-    <p>Daniel Bramatti, Diego Rabatone, José Roberto de Toledo, Lucas de Abreu Maia e Rodrigo Burgarelli</p>
+<footer class="col-xs-12 text-left">
     <p><b>Grupo Estado</b> • Copyright © 2007-2014 • <a href="https://creativecommons.org/licenses/by-sa/3.0/br/">Alguns direitos reservados (CC-By-SA)</a></p>
 </footer>
 
@@ -225,7 +224,14 @@
 <script src="chosen.jquery.js" type="text/javascript"></script>
 <script src="docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    $("#doadores").chosen();
+    $("#doadores").chosen({
+        placeholder_text_multiple:"Selecione uma empresa...",
+        no_results_text:"Nenhuma empresa encontrada",
+        search_contains:true,
+        single_backstroke_delete:true,
+
+    });
+    $("#doadores").chosen().va
     </script>
 
 <script src="js/empresas.js"></script>
