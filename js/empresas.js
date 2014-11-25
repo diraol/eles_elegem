@@ -44,8 +44,8 @@ function busca_candidato(nodes,candidato) {
 }
 var arquivo = null
 
-var width = 1500,
-    height = 900;
+var width = $("#container").width()-200,
+    height = 700;
 
 var color = d3.scale.category20();
 

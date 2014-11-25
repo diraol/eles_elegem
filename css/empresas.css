@@ -14,7 +14,10 @@
     position: relative;
 }
 
-
+#main_content {
+    padding-top: 20px;
+    height: 900px
+}
 
 #empresas {
     width: 100px;
