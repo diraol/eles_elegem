@@ -223,7 +223,7 @@ function acha_doacoes(nome) {
     var doacoes = candidatos[nome]
     var saida = ""
     for (var e in doacoes) {
-        saida += "<br><b>"+e+": </b> R$ "+formatNumber(Math.round(doacoes[e])).replace(",",".")
+        saida += "<br><b>"+e+": </b> R$ "+formatNumber(Math.round(doacoes[e])).replace(",",".").replace(",",".")
     }
     return saida
 }
