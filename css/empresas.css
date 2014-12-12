@@ -1,5 +1,8 @@
-body, html, #main_content, #main_content #container  {
-height: 100%;
+body,
+html,
+#main_content,
+#main_content #container {
+  height: 100%;
 }
 .node {
   stroke: #fff;
@@ -36,14 +39,13 @@ div.tooltip {
   width: auto;
   height: auto;
   padding: 6px;
+  margin-left: 35px;
   font: 14px Arial;
   background: lightsteelblue;
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
 }
-
 .selecionada {
-  padding-left: 
-
+  padding-left:
 }
