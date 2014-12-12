@@ -9,8 +9,17 @@
 }
 
 #container {
-    width: 100%;
     position: relative;
+    width: 90%;
+
+}
+
+#grafico {
+    height: 600;
+    width: 100%;
+    overflow: scroll;
+    padding-left:-10px;
+
 }
 
 #main_content {

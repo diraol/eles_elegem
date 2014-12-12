@@ -8,8 +8,8 @@ var empresas = ["JBS"],
     nodes = [],
     links = [],
     arquivo = null,
-    width = $("#container").width(),
-    height = 700,
+    width = $("#container").width()*1.1,
+    height = 1000,
     color = d3.scale.category20();
 
 var svg = d3.select("#grafico").append("svg")
