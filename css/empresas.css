@@ -10,12 +10,13 @@
 
 #container {
     position: relative;
+    
     width: 90%;
 
 }
 
 #grafico {
-    height: 600;
+    height: 75%;
     width: 100%;
     overflow: scroll;
     padding-left:-10px;
@@ -38,7 +39,7 @@
 
 div.tooltip {
     position: absolute;
-    text-align: center;
+    text-align: left;
     width: auto;
     height: auto;
     padding: 6px;

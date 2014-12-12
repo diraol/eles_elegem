@@ -3,14 +3,16 @@ var div = d3.select("body").append("div")
             .style("opacity", 0);
 
 var empresas = ["JBS"],
-    mudou = null
+    candidatos = {},
+    mudou = null,
     formatNumber = d3.format(",d"),
     nodes = [],
     links = [],
     arquivo = null,
     width = $("#container").width()*1.1,
     height = 1000,
-    color = d3.scale.category20();
+    color = d3.scale.category20(),
+    formatNumber = d3.format(",d");
 
 var svg = d3.select("#grafico").append("svg")
         .attr("width", width)
@@ -33,6 +35,12 @@ var drag = force.drag()
 
 var node = svg.selectAll(".node"),
     link = svg.selectAll(".link")
+
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
 
 function muda_empresa(d) {
     novas_empresas = getValue()
@@ -62,10 +70,10 @@ function dragstart(d) {
 
 function filtra_dados(deus) {
     var temp = deus.links.filter(function (d) { return empresas.indexOf(d.empresa) != -1})
-    var candidatos = []
-    temp.forEach(function (d) { candidatos.push(d.candidato)})
-    candidatos = candidatos.concat(empresas)
-    var novos_nodes = deus.nodes.filter(function (d) { return candidatos.indexOf(d.name) != -1 })
+    var candi = []
+    temp.forEach(function (d) { candi.push(d.candidato)})
+    candi = candi.concat(empresas)
+    var novos_nodes = deus.nodes.filter(function (d) { return candi.indexOf(d.name) != -1 })
     var novos_links = []
     var temp_empresas = deus.nodes.filter(function (d) { return empresas.indexOf(d.name) != -1})
     var trad_empresas = {}
@@ -73,8 +81,8 @@ function filtra_dados(deus) {
     novos_nodes.forEach(function (d) { 
         var empresas_nesse_caso = []
         temp.forEach(function (ligacao) { if (ligacao.candidato == d.name) empresas_nesse_caso.push(ligacao.empresa) })
-        empresas_nesse_caso.forEach(function (emp) { 
-            var ligacao = {source:d,target:temp_empresas[trad_empresas[emp]]}
+        empresas_nesse_caso.forEach(function (emp) {
+            var ligacao = {source:d,target:temp_empresas[trad_empresas[emp]],value:candidatos[d.name][emp]}
             novos_links.push(ligacao)
         })
     })
@@ -104,6 +112,7 @@ function acha_cor(d) {
 function carrega_dados() {
     d3.json("jbs.json", function(error, dados) {
         arquivo = dados
+        preenche_candidatos()
         comecar()
     })
 }
@@ -112,7 +121,7 @@ function start() {
   link.enter().append("line")
         .attr("name",function (d) { return d.target.name})
         .attr("class", "link")
-        .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+        .style("stroke-width", function(d) { return Math.sqrt(Math.sqrt(Math.sqrt(d.value))) -2 ; });
     link.exit().remove();
 
   node = node.data(force.nodes(), function(d) { return d.name;});
@@ -142,7 +151,7 @@ function start() {
                 .duration(200)
                 .style("opacity", 1);
         if (d.group == 3) {
-            div.html(d.name + " ("+ d.partido+")")
+            div.html(d.name + " ("+ d.partido+")</br>"+acha_doacoes(d.name))
         } else {
             div.html("<b>"+d.name+"</b><br>Total doado: R$"+formatNumber(Math.round(d.valor)).replace(",",".").replace(",","."))
         }
@@ -182,6 +191,7 @@ function start() {
   })*/
   node.exit().remove();
   force.start()
+  d3.selectAll("circle").moveToFront()
 }
 
 function comecar() {        
@@ -192,6 +202,26 @@ function comecar() {
     force.nodes(nodes);         
     start()
     $("#doadores").trigger("chosen:updated");
+}
+
+function preenche_candidatos() {
+    var links_local = arquivo["links"]
+    var cand = candidatos
+    links_local.forEach(function (d) {
+        if (!(d["candidato"] in cand)) {
+            cand[d["candidato"]] = {}
+        }
+        cand[d["candidato"]][d["empresa"]] = d.value
+    })
+    candidatos = cand
+}
+function acha_doacoes(nome) {
+    var doacoes = candidatos[nome]
+    var saida = ""
+    for (var e in doacoes) {
+        saida += "<br><b>"+e+": </b> R$ "+formatNumber(Math.round(doacoes[e])).replace(",",".")
+    }
+    return saida
 }
 
 function atualizar() {
