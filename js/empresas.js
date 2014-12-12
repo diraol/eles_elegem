@@ -125,7 +125,7 @@ function start() {
   link.enter().append("line")
         .attr("name",function (d) { return d.target.name})
         .attr("class", "link")
-        .style("stroke-width", function(d) { return Math.sqrt(Math.sqrt(Math.sqrt(d.value))) -2 ; });
+        .style("stroke-width", function(d) { return Math.max(Math.sqrt(Math.sqrt(Math.sqrt(d.value))) -2,0.5) ; });
     link.exit().remove();
 
   node = node.data(force.nodes(), function(d) { return d.name;});
