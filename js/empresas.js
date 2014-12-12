@@ -116,8 +116,12 @@ function carrega_dados() {
         comecar()
     })
 }
+
 function start() {
-  link = link.data(force.links())
+    link = link.data([])
+    link.exit().remove()
+    
+  link = link.data(links)
   link.enter().append("line")
         .attr("name",function (d) { return d.target.name})
         .attr("class", "link")
