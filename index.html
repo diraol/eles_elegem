@@ -1,9 +1,10 @@
 <html lang="pt-br">
+
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-    <title>Os donos do Congresso - Estadão Dados</title>
+    <title>Os donos da Câmara - Estadão Dados</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index">
@@ -15,14 +16,17 @@
     <meta property="og:locale" content="pt_BR">
 
     <!-- meta tags específicas de cada projeto -->
-    <meta name="author" content="Rodrigo Burgarelli"> <!-- A pessoa responsável pelo desenvolvimento deste arquivo -->
-    <meta name="DC.creator " content="Rodrigo Burgarelli"> <!-- Desenvolvedor da página -->
-    <meta name="DC.creator.address" content="rodrigo.burgarelli1@gmail.com"> <!-- email do autor da página -->
+    <meta name="author" content="Rodrigo Burgarelli">
+    <!-- A pessoa responsável pelo desenvolvimento deste arquivo -->
+    <meta name="DC.creator " content="Rodrigo Burgarelli">
+    <!-- Desenvolvedor da página -->
+    <meta name="DC.creator.address" content="rodrigo.burgarelli1@gmail.com">
+    <!-- email do autor da página -->
 
     <!-- O nome desta aplicação -->
 
-    <meta name="application-name" content="'empresas eleitoral'">
-    <meta name="og:title" content="'empresas eleitoral'">
+    <meta name="application-name" content="Os donos da Câmara">
+    <meta name="og:title" content="Os donos da Câmara">
 
 
     <!-- Descrição curta e precisa do conteúdo desta página -->
@@ -36,11 +40,12 @@
     <meta name="keywords" content="eleições 2014, doações, doacoes, doadores, eleições, eleicoes, Brasil, partidos, Congresso, Câmara, dados abertos, política, dataviz, opendata, jornalismo de dados, datajournalism">
 
 
-    <meta property="og:url" content="http://estadaodados.com/donosdocongresso/"/> <!-- ex: http://estadaodados.com/html/coligacoes/ -->
+    <meta property="og:url" content="http://estadaodados.com/donosdocongresso/" />
+    <!-- ex: http://estadaodados.com/html/coligacoes/ -->
 
     <!-- imagem que aparecerá no facebook quando o site for compartilhado -->
 
-    <meta property="og:image" content="http://estadaodados.com/empresas_eleitoral/imgs/empresas_eleitoral.png"/>
+    <meta property="og:image" content="http://estadaodados.com/empresas_eleitoral/imgs/empresas_eleitoral.png" />
 
 
     <!-- Le styles -->
@@ -59,7 +64,6 @@
     <link rel="shortcut icon" href="imgs/favicon.png">
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-    <link rel="stylesheet" href="docsupport/style.css">
     <link rel="stylesheet" href="docsupport/prism.css">
     <link rel="stylesheet" href="chosen.css">
 
@@ -69,7 +73,9 @@
             width: 450px;
             height: 200px;
         }
-        #locales { padding-bottom:16px; }
+        #locales {
+            padding-bottom: 16px;
+        }
         div.debug_uiControls {
             margin-top: 16px;
         }
@@ -81,8 +87,8 @@
             margin-top: 16px;
         }
         .example-container {
-            overflow:visible;
-            width:100%;
+            overflow: visible;
+            width: 100%;
         }
     </style>
 
@@ -94,187 +100,291 @@
 </head>
 
 <body>
-<header>
-    <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid" id="navbar-edados">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-edados">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="http://estadaodados.com/base/imgs/logo_estadao_dados.png" id="logo_estadao_dados" title="Estadão Dados"/></a>
-            </div>
-            <div class="navbar-collapse collapse navbar-collapse-edados" id="navbar-collapse-edados">
-                <ul class="nav navbar-nav navbar-edados">
-                    <li class="dropdown active navbar-edados-projetos">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <header>
+        <nav class="navbar navbar-fixed-top">
+            <div class="container-fluid" id="navbar-edados">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-edados">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="http://estadaodados.com/base/imgs/logo_estadao_dados.png" id="logo_estadao_dados" title="Estadão Dados" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse navbar-collapse-edados" id="navbar-collapse-edados">
+                    <ul class="nav navbar-nav navbar-edados">
+                        <li class="dropdown active navbar-edados-projetos">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Projetos <b class="caret"></b>
                         </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabelProjetos">
-                            <!--START_MENU_ITENS-->
-                            <li role="presentation"><a href="/basometro">Basômetro</a></li>
-                            <li role="presentation"><a href="/biomas2012">Biomas 2012</a></li>
-                            <li role="presentation"><a href="/coligacoes">Coligações</a></li>
-                            <li role="presentation"><a href="/cotas">Cotas</a></li>
-                            <li role="presentation"><a href="/cruzador">Cruzador de Opiniões</a></li>
-                            <li role="presentation"><a href="/eleicoes2012">Eleições 2012</a></li>
-                            <li role="presentation"><a href="/ideb">IDEB</a></li>
-                            <li role="presentation"><a href="/intencaodevoto">Intenção de Voto</a></li>
-                            <li role="presentation"><a href="/perfil_eleitorado">Perfil do Eleitorado</a></li>
-                            <li role="presentation"><a href="/piramide_eleitoral">Pirâmide Eleitoral</a></li>
-                            <li role="presentation"><a href="/quespvcquer">Que SP vc quer?</a></li>
-                            <li role="presentation"><a href="/religiao">Religiões</a></li>
-                            <li role="presentation"><a href="/ringue2014">Ringue 2014</a></li>
-                            <li role="presentation"><a href="/santamaria">Santa Maria</a></li>
-                            <li role="presentation"><a href="/saopauloquebalanca">São Paulo que balança</a></li>
-                            <li role="presentation"><a href="/doacoes2014">Siga o dinheiro</a></li>
-                            <!--END_MENU_ITENS-->
-                        </ul>
-                    </li>
-                    <li><a href="http://blog.estadaodados.com">Blog</a></li>
-                    <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabelProjetos">
+                                <!--START_MENU_ITENS-->
+                                <li role="presentation"><a href="/basometro">Basômetro</a>
+                                </li>
+                                <li role="presentation"><a href="/biomas2012">Biomas 2012</a>
+                                </li>
+                                <li role="presentation"><a href="/coligacoes">Coligações</a>
+                                </li>
+                                <li role="presentation"><a href="/cotas">Cotas</a>
+                                </li>
+                                <li role="presentation"><a href="/cruzador">Cruzador de Opiniões</a>
+                                </li>
+                                <li role="presentation"><a href="/eleicoes2012">Eleições 2012</a>
+                                </li>
+                                <li role="presentation"><a href="/ideb">IDEB</a>
+                                </li>
+                                <li role="presentation"><a href="/intencaodevoto">Intenção de Voto</a>
+                                </li>
+                                <li role="presentation"><a href="/perfil_eleitorado">Perfil do Eleitorado</a>
+                                </li>
+                                <li role="presentation"><a href="/piramide_eleitoral">Pirâmide Eleitoral</a>
+                                </li>
+                                <li role="presentation"><a href="/quespvcquer">Que SP vc quer?</a>
+                                </li>
+                                <li role="presentation"><a href="/religiao">Religiões</a>
+                                </li>
+                                <li role="presentation"><a href="/ringue2014">Ringue 2014</a>
+                                </li>
+                                <li role="presentation"><a href="/santamaria">Santa Maria</a>
+                                </li>
+                                <li role="presentation"><a href="/saopauloquebalanca">São Paulo que balança</a>
+                                </li>
+                                <li role="presentation"><a href="/doacoes2014">Siga o dinheiro</a>
+                                </li>
+                                <!--END_MENU_ITENS-->
+                            </ul>
+                        </li>
+                        <li><a href="http://blog.estadaodados.com">Blog</a>
+                        </li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             Estadão
                             <b class="caret"></b>
                         </a>
-                        <ul class="dropdown-menu" role="menuEstadao" aria-labelledby="dLabelEstadao">
-                            <li><a href="http://politica.estadao.com.br/" target="_top" title="POLÍTICA">Política</a></li>
-                            <li><a href="http://economia.estadao.com.br/" target="_top" title="ECONOMIA">Economia</a></li>
-                            <li><a href="http://esportes.estadao.com.br/" target="_top" title="ESPORTES">Esportes</a></li>
-                            <li><a href="http://blogs.estadao.com.br/link/" target="_top" title="LINK">Link</a></li>
-                            <li><a href="http://rta-se.estadao.com.br/" target="_top" title="DIVIRTA-SE">Divirta-se</a></li>
-                            <li><a href="http://pme.estadao.com.br/" target="_top" title="PME">PME</a></li>
-                            <li><a href="http://www.estadao.com.br/jornal-do-carro" target="_top" title="JORNAL DO CARRO">Jornal do Carro</a></li>
-                            <li><a href="http://www.estadao.com.br/opiniao/" target="_top" title="OPINIÃO">Opinião</a></li>
-                            <li><a href="http://acervo.estadao.com.br/" target="_top" title="ACERVO">Acervo</a></li>
-                            <li><a href="http://radio.estadao.com.br/" target="_top" title="RÁDIO">Rádio</a></li>
-                            <li><a href="http://territorioeldorado.limao.com.br" target="_top" title="Eldorado">Eldorado</a></li>
-                            <li><a href="http://revistapiaui.estadao.com.br/" target="_top" title="Piauí">Piauí</a></li>
-                            <li><a href="http://www.broadcastpolitico.com.br/experimente/" target="_top" title="Broadcast Político">Broadcast Político</a></li>
+                            <ul class="dropdown-menu" role="menuEstadao" aria-labelledby="dLabelEstadao">
+                                <li><a href="http://politica.estadao.com.br/" target="_top" title="POLÍTICA">Política</a>
+                                </li>
+                                <li><a href="http://economia.estadao.com.br/" target="_top" title="ECONOMIA">Economia</a>
+                                </li>
+                                <li><a href="http://esportes.estadao.com.br/" target="_top" title="ESPORTES">Esportes</a>
+                                </li>
+                                <li><a href="http://blogs.estadao.com.br/link/" target="_top" title="LINK">Link</a>
+                                </li>
+                                <li><a href="http://rta-se.estadao.com.br/" target="_top" title="DIVIRTA-SE">Divirta-se</a>
+                                </li>
+                                <li><a href="http://pme.estadao.com.br/" target="_top" title="PME">PME</a>
+                                </li>
+                                <li><a href="http://www.estadao.com.br/jornal-do-carro" target="_top" title="JORNAL DO CARRO">Jornal do Carro</a>
+                                </li>
+                                <li><a href="http://www.estadao.com.br/opiniao/" target="_top" title="OPINIÃO">Opinião</a>
+                                </li>
+                                <li><a href="http://acervo.estadao.com.br/" target="_top" title="ACERVO">Acervo</a>
+                                </li>
+                                <li><a href="http://radio.estadao.com.br/" target="_top" title="RÁDIO">Rádio</a>
+                                </li>
+                                <li><a href="http://territorioeldorado.limao.com.br" target="_top" title="Eldorado">Eldorado</a>
+                                </li>
+                                <li><a href="http://revistapiaui.estadao.com.br/" target="_top" title="Piauí">Piauí</a>
+                                </li>
+                                <li><a href="http://www.broadcastpolitico.com.br/experimente/" target="_top" title="Broadcast Político">Broadcast Político</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+        <!-- Fim da barra de navegação do Estadão Dados -->
+
+        <!-- Cabeçalho -->
+        <div class="container-fluid text-center titulo-header">
+            <div class="col-sm-10 col-xs-12">
+                <h1>Os donos do Congresso</h1>
+                <h4>A bancada de cada um dos maiores doadores de campanha em 2014</h4>
+            </div>
+            <div class="col-sm-2 social-sharing visible-sm visible-md visible-lg">
+                <!-- AddThis Button BEGIN -->
+                <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+
+                    <a class="addthis_button_twitter" addthis:title="Navegue no mapa das coligações eleitorais. #estadaodados"></a>
+                    <a class="addthis_button_facebook" addthis:title="Navegue no mapa das coligações eleitorais. #estadaodados"></a>
+
+                </div>
+                <!-- AddThis Button END -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <section id="main_content" class="container-fluid">
+        <div id="container">
+            <aside id="empresas">
+                <div class="btn-group" role="group" aria-label="...">
+                    <div class="btn-group">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                            Empresas Selecionadas
+                            <span class="caret"></span>
+                        </button>
+                        <ul id="empSelecionadas" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation" data-pos="1"><a role="menuitem" onclick='toggleSelect(this);' class="selecionada glyphicon glyphicon-remove-circle" tabindex="-1" href="#">JBS</a>
+                            </li>
                         </ul>
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                            Empresas Não Selecionadas
+                            <span class="caret"></span>
+                        </button>
+                        <ul id="empNSelecionadas" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation" data-pos="2"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CONSTRUTORA ANDRADE GUTIERREZ</a>
+                            </li>
+                            <li role="presentation" data-pos="3"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CONSTRUTORA OAS</a>
+                            </li>
+                            <li role="presentation" data-pos="4"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CRBS (AMBEV)</a>
+                            </li>
+                            <li role="presentation" data-pos="5"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CONSTRUTORA QUEIROZ GALVÃO</a>
+                            </li>
+                            <li role="presentation" data-pos="6"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">GRUPO BRADESCO</a>
+                            </li>
+                            <li role="presentation" data-pos="7"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">UTC ENGENHARIA</a>
+                            </li>
+                            <li role="presentation" data-pos="8"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CONSTRUTORA NORBERTO ODEBRECHT</a>
+                            </li>
+                            <li role="presentation" data-pos="9"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">ITAU UNIBANCO</a>
+                            </li>
+                            <li role="presentation" data-pos="10"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">AMIL ASSISTENCIA MEDICA INTERNACIONAL</a>
+                            </li>
+                            <li role="presentation" data-pos="11"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">GALVÃO ENGENHARIA</a>
+                            </li>
+                            <li role="presentation" data-pos="12"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">BRASKEM</a>
+                            </li>
+                            <li role="presentation" data-pos="13"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">COSAN LUBRIFICANTES E ESPECIALIDADES</a>
+                            </li>
+                            <li role="presentation" data-pos="14"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CARIOCA CHRISTIANI NIELSEN ENGENHARIA</a>
+                            </li>
+                            <li role="presentation" data-pos="15"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">BANCO BTG PACTUAL</a>
+                            </li>
+                            <li role="presentation" data-pos="16"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">GRUPO VALE</a>
+                            </li>
+                            <li role="presentation" data-pos="17"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">COMPANHIA METALURGICA PRADA</a>
+                            </li>
+                            <li role="presentation" data-pos="18"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CERVEJARIA PETROPOLIS</a>
+                            </li>
+                            <li role="presentation" data-pos="19"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">ARCELORMITTAL BRASIL</a>
+                            </li>
+                            <li role="presentation" data-pos="20"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">SAEPAR SERVICOS E PARTICIPACOES</a>
+                            </li>
+                            <li role="presentation" data-pos="21"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">TELEMONT ENGENHARIA TELECOMUNICAÇÕES</a>
+                            </li>
+                            <li role="presentation" data-pos="22"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">BRF</a>
+                            </li>
+                            <li role="presentation" data-pos="23"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">SEARA ALIMENTOS LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="24"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">COMPANHIA BRASILEIRA DE METALURGIA E MINERAÇÃO</a>
+                            </li>
+                            <li role="presentation" data-pos="25"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">BANCO BMG</a>
+                            </li>
+                            <li role="presentation" data-pos="26"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">RIO DE JANEIRO REFRESCOS LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="27"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">SALOBO METAIS</a>
+                            </li>
+                            <li role="presentation" data-pos="28"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">GERDAU AÇOS ESPECIAIS</a>
+                            </li>
+                            <li role="presentation" data-pos="29"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">COPERSUCAR</a>
+                            </li>
+                            <li role="presentation" data-pos="30"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">SERRANA EMPREENDIMENTOS E PARTICIPAÇOES</a>
+                            </li>
+                            <li role="presentation" data-pos="31"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">RECOFARMA INDUSTRIA DO AMAZONAS LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="32"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">INDUSTRIAS BRASILEIRAS DE ARTIGOS REFRATÁRIOS - IBAR - LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="33"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">SUPERMERCADOS BH COM ALIM LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="34"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">ELDORADO BRASIL CELULOSE</a>
+                            </li>
+                            <li role="presentation" data-pos="35"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">VIGOR ALIMENTOS</a>
+                            </li>
+                            <li role="presentation" data-pos="36"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">ENGEVIX ENGENHARIA</a>
+                            </li>
+                            <li role="presentation" data-pos="37"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">PORTO SEGURO COMPANHIA DE SEGUROS GERAIS</a>
+                            </li>
+                            <li role="presentation" data-pos="38"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">RIMA INDUSTRIAL</a>
+                            </li>
+                            <li role="presentation" data-pos="39"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">GRUPO CAMARGO CORREA</a>
+                            </li>
+                            <li role="presentation" data-pos="40"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">GUARANI</a>
+                            </li>
+                            <li role="presentation" data-pos="41"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">BANCONTANDER (BRASIL)</a>
+                            </li>
+                            <li role="presentation" data-pos="42"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">COMPANHIA SIDERURGICA VALE DO PINDARE</a>
+                            </li>
+                            <li role="presentation" data-pos="43"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">SPAL INDUSTRIA BRASILEIRA DE BEBIDAS</a>
+                            </li>
+                            <li role="presentation" data-pos="44"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">IGUATEMI EMPRESA DE SHOPPING CENTERS</a>
+                            </li>
+                            <li role="presentation" data-pos="45"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CR ALMEIDA ENGENHARIA DE OBRAS</a>
+                            </li>
+                            <li role="presentation" data-pos="46"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">S A PAULISTA DE CONSTRUCOES E COMERCIO</a>
+                            </li>
+                            <li role="presentation" data-pos="47"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">BRASIL TRADING LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="48"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CAÇAPAVA EMPREITADA DE LAVOR LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="49"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">CONSTRUTORANCHES TRIPOLONI LTDA</a>
+                            </li>
+                            <li role="presentation" data-pos="50"><a role="menuitem" onclick="toggleSelect(this);" class="nao-selecionada" tabindex="-1" href="#">RECREIO B. H. VEICULOS</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+            <div id="grafico"></div>
         </div>
-    </nav> <!-- Fim da barra de navegação do Estadão Dados -->
 
-    <!-- Cabeçalho -->
-    <div class="container-fluid text-center titulo-header">
-        <div class="col-sm-10 col-xs-12">
-            <h1>Os donos do Congresso</h1>
-            <h4>A bancada de cada um dos maiores doadores de campanha em 2014</h4>
-        </div>
-        <div class="col-sm-2 social-sharing visible-sm visible-md visible-lg">
-            <!-- AddThis Button BEGIN -->
-            <div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+    </section>
+    </aside>
 
-                <a class="addthis_button_twitter" addthis:title="Navegue no mapa das coligações eleitorais. #estadaodados"></a>
-                <a class="addthis_button_facebook" addthis:title="Navegue no mapa das coligações eleitorais. #estadaodados"></a>
+    <!-- AddThis Button END -->
+    <footer class="col-xs-12 text-left">
+        <p><b>Grupo Estado</b> • Copyright © 2007-2014 • <a href="https://creativecommons.org/licenses/by-sa/3.0/br/">Alguns direitos reservados (CC-By-SA)</a>
+        </p>
+    </footer>
 
-            </div>
-            <!-- AddThis Button END -->
-        </div>
-    </div>
-</header>
-
-<!-- Conteúdo Principal -->
-<section id="main_content" class="container-fluid">
-       <div id="container">
-            <div id="empresas">
-                <span>
-                Clique em qualquer lugar da caixa para selecionar outros doadores:
-                <p></span>
-                <select style="width:350px;" multiple="multiple" tabindex="1" id="doadores" class="chosen-select"  onChange="muda_empresa(this)">
-                    <option selected=true>JBS</option>
-                    <option>CONSTRUTORA ANDRADE GUTIERREZ</option>
-                    <option>CONSTRUTORA OAS</option>
-                    <option>CRBS (AMBEV)</option>
-                    <option>CONSTRUTORA QUEIROZ GALVÃO</option>
-                    <option>GRUPO BRADESCO</option>
-                    <option>UTC ENGENHARIA</option>
-                    <option>CONSTRUTORA NORBERTO ODEBRECHT</option>
-                    <option>ITAU UNIBANCO</option>
-                    <option>AMIL ASSISTENCIA MEDICA INTERNACIONAL</option>
-                    <option>GALVÃO ENGENHARIA</option>
-                    <option>BRASKEM</option>
-                    <option>COSAN LUBRIFICANTES E ESPECIALIDADES</option>
-                    <option>CARIOCA CHRISTIANI NIELSEN ENGENHARIA</option>
-                    <option>BANCO BTG PACTUAL</option>
-                    <option>GRUPO VALE</option>
-                    <option>COMPANHIA METALURGICA PRADA</option>
-                    <option>CERVEJARIA PETROPOLIS</option>
-                    <option>ARCELORMITTAL BRASIL</option>
-                    <option>SAEPAR SERVICOS E PARTICIPACOES</option>
-                    <option>TELEMONT ENGENHARIA TELECOMUNICAÇÕES</option>
-                    <option>BRF</option>
-                    <option>SEARA ALIMENTOS LTDA</option>
-                    <option>COMPANHIA BRASILEIRA DE METALURGIA E MINERAÇÃO</option>
-                    <option>BANCO BMG</option>
-                    <option>RIO DE JANEIRO REFRESCOS LTDA</option>
-                    <option>SALOBO METAIS</option>
-                    <option>GERDAU AÇOS ESPECIAIS</option>
-                    <option>COPERSUCAR</option>
-                    <option>SERRANA EMPREENDIMENTOS E PARTICIPAÇOES</option>
-                    <option>RECOFARMA INDUSTRIA DO AMAZONAS LTDA</option>
-                    <option>INDUSTRIAS BRASILEIRAS DE ARTIGOS REFRATÁRIOS - IBAR - LTDA</option>
-                    <option>SUPERMERCADOS BH COM ALIM LTDA</option>
-                    <option>ELDORADO BRASIL CELULOSE</option>
-                    <option>VIGOR ALIMENTOS</option>
-                    <option>ENGEVIX ENGENHARIA</option>
-                    <option>PORTO SEGURO COMPANHIA DE SEGUROS GERAIS</option>
-                    <option>RIMA INDUSTRIAL</option>
-                    <option>GRUPO CAMARGO CORREA</option>
-                    <option>GUARANI</option>
-                    <option>BANCONTANDER (BRASIL)</option>
-                    <option>COMPANHIA SIDERURGICA VALE DO PINDARE</option>
-                    <option>SPAL INDUSTRIA BRASILEIRA DE BEBIDAS</option>
-                    <option>IGUATEMI EMPRESA DE SHOPPING CENTERS</option>
-                    <option>CR ALMEIDA ENGENHARIA DE OBRAS</option>
-                    <option>S A PAULISTA DE CONSTRUCOES E COMERCIO</option>
-                    <option>BRASIL TRADING LTDA</option>
-                    <option>CAÇAPAVA EMPREITADA DE LAVOR LTDA</option>
-                    <option>CONSTRUTORANCHES TRIPOLONI LTDA</option>
-                    <option>RECREIO B. H. VEICULOS</option>        </select></div>
-                <div id="grafico"></div>
-            </div>
-
-</section>
-</aside>
-
-<!-- AddThis Button END -->
-<footer class="col-xs-12 text-left">
-    <p><b>Grupo Estado</b> • Copyright © 2007-2014 • <a href="https://creativecommons.org/licenses/by-sa/3.0/br/">Alguns direitos reservados (CC-By-SA)</a></p>
-</footer>
-
-<!-- Le javascript
+    <!-- Le javascript
 ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
-<script src="chosen.jquery.js" type="text/javascript"></script>
-<script src="docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-    $("#doadores").chosen({
-        placeholder_text_multiple:"Selecione uma empresa...",
-        no_results_text:"Nenhuma empresa encontrada",
-        search_contains:true,
-        single_backstroke_delete:true,
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+    <script src="chosen.jquery.js" type="text/javascript"></script>
+    <script src="docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $("#doadores").chosen({
+            placeholder_text_multiple: "Selecione uma empresa...",
+            no_results_text: "Nenhuma empresa encontrada",
+            search_contains: true,
+            single_backstroke_delete: true,
 
-    });
-    $("#doadores").chosen().va
+        });
+        $("#doadores").chosen().va
     </script>
 
-<script src="js/empresas.js"></script>
+    <script src="js/empresas.js"></script>
 
 
 
-<!-- AddThis Button BEGIN -->
-<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53751e9e65674220"></script>
-<!-- AddThis Button END -->
+    <!-- AddThis Button BEGIN -->
+    <script type="text/javascript">
+        var addthis_config = {
+            "data_track_addressbar": true
+        };
+    </script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53751e9e65674220"></script>
+    <!-- AddThis Button END -->
 
-<!-- google analytics -->
-<script language="javascript" type="text/javascript" src="js/edados_analytics.js"></script>
+    <!-- google analytics -->
+    <script language="javascript" type="text/javascript" src="js/edados_analytics.js"></script>
 
 </body>
