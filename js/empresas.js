@@ -337,7 +337,7 @@ function tick(e) {
 }
 
 function cluster(alpha) {
-    alpha = alpha*2
+    alpha = alpha*1.2
   return function(d) {
       if (d.group != 1 ) {
     var cluster = clusters[d.partido];
