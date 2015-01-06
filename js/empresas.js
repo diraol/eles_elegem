@@ -3,6 +3,7 @@ var div = d3.select("body").append("div")
   .style("opacity", 0);
 
 var empresas = ["JBS"],
+  groups = null,
   candidatos = {},
   mudou = null,
   formatNumber = d3.format(",d"),
@@ -12,7 +13,8 @@ var empresas = ["JBS"],
   width = $("#grafico").width() -20,
   height = $("#grafico").height(),
   color = d3.scale.category20(),
-  formatNumber = d3.format(",d");
+  formatNumber = d3.format(",d")
+  clusters = {};
 
 var svg = d3.select("#grafico").append("svg")
   .attr("width", width)
@@ -35,6 +37,47 @@ var drag = force.drag()
 
 var node = svg.selectAll(".node"),
   link = svg.selectAll(".link")
+
+var cores = {
+    "PT"       :["#a00200",1],
+    "PST"      :["#a51001",2],
+    "PL"       :["#aa1d01",3],
+    "PTC"      :["#b02b01",4],
+    "PC do B"    :["#b53901",5],
+    "PP"       :["#ba4601",6],
+    "PRB"      :["#bf5301",7],
+    "PSL"      :["#c46102",8],
+    "PPL"      :["#ca6f03",9],
+    "PSB"      :["#cf7d03",10],
+    "PMDB"     :["#d48b03",11],
+    "PROS"     :["#d99803",12],
+    "PRTB"     :["#dea604",13],
+    "PTB"      :["#e4b304",14],
+    "PRP"      :["#e9c104",15],
+    "PDT"      :["#eece04",16],
+    "PHS"      :["#f3dc05",17],
+    "PR"       :["#f4e509",18],
+    "PSC"      :["#eae116",19],
+    "PMR"      :["#dfdd24",20],
+    "PT do B"    :["#d5d931",21],
+    "PV"       :["#cad63e",22],
+    "PMN"      :["#c0d24b",23],
+    "PSD"      :["#b6ce58",24],
+    "PEN"      :["#abc966",25],
+    "PTN"      :["#abc966",25],
+    "SD"      :["#a1c673",26],
+    "PSOL"     :["#97c281",27],
+    "PPS"      :["#8cbe8e",28],
+    "DEM"      :["#82ba9b",29],
+    "PFL_DEM"  :["#77b6a8",30],
+    "PSDB"     :["#6db3b6",31],
+    "PRONA"    :["#62afc3",32],
+    "PAN"      :["#58abd0",33],
+    "PSDC"     :["#4da7de",34],
+    // "ZZZ"   :["#43a3eb",35],
+    "S.Part."   :["#999999",35]
+}
+
 
 d3.selection.prototype.moveToFront = function() {
   return this.each(function() {
@@ -102,12 +145,7 @@ function acha_cor(d) {
   if (d.group == 1) {
     return "#4d5266"
   } else {
-    if (d.partido == "PT") return "#690000"
-    else if (d.partido == "PSDB") return "#1e2e66"
-    else if (d.partido == "PMDB") return "#6b4200"
-    else if (d.partido == "PSD") return "#4f5d15"
-    else if (d.partido == "PP") return "#a6546f"
-    else return "#666e87"
+    return cores[d.partido][0]
   }
 }
 
@@ -155,7 +193,7 @@ function start() {
     })
     .style("stroke", function(d) {
       //return "#fff"
-      return acha_cor(d)
+      return "#fff"
     })
     .style("fill-opacity", function(d) {
       if (d.group == 1) return 1
@@ -213,6 +251,15 @@ function start() {
   node.exit().remove();
   force.start()
   d3.selectAll("circle").moveToFront()
+  groups = d3.nest()
+      .key(function(d) { return d.partido; })
+      .map(nodes)  
+  for (var key in groups) {
+      if (key != "undefined") {
+          clusters[key] = groups[key][0]          
+      }
+  }
+  
 }
 
 function comecar() {
@@ -258,7 +305,8 @@ function atualizar() {
 
 }
 
-function tick() {
+function tick(e) {
+    
   link.attr("x1", function(d) {
       return d.source.x;
     })
@@ -271,15 +319,44 @@ function tick() {
     .attr("y2", function(d) {
       return d.target.y;
     });
-
-  node.attr("cx", function(d) {
+/*
+    var k = e.alpha * .1;
+    nodes.forEach(function(node) {
+      var center = nodes[node.type];
+      node.x += (center.x - node.x) * k;
+      node.y += (center.y - node.y) * k;
+    });
+ */   
+    node.each(cluster(10 * e.alpha * e.alpha))
+    node.attr("cx", function(d) {
       return d.x;
     })
     .attr("cy", function(d) {
       return d.y;
     });
 }
-carrega_dados();
+
+function cluster(alpha) {
+    alpha = alpha*2
+  return function(d) {
+      if (d.group != 1 ) {
+    var cluster = clusters[d.partido];
+    if (cluster === d) return;
+    var x = d.x - cluster.x,
+        y = d.y - cluster.y,
+        l = Math.sqrt(x * x + y * y),
+        r = 10
+    if (l != r) {
+      l = (l - r) / l * alpha;
+      d.x -= x *= l;
+      d.y -= y *= l;
+      cluster.x += x;
+      cluster.y += y;
+    }
+  };
+  }
+}
+
 
 function toggleSelect(el) {
   var container_selecionadas = $("#empSelecionadas"),
@@ -301,3 +378,5 @@ function toggleSelect(el) {
 function sort_comp(a,b) {
     return $(b).data('pos') < $(a).data("pos") ? 1 : -1;
 }
+
+carrega_dados();
