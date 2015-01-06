@@ -18,7 +18,11 @@ var empresas = ["JBS"],
 
 var svg = d3.select("#grafico").append("svg")
   .attr("width", width)
-  .attr("height", height);
+  .attr("height", height)
+  .append("g")
+  .call(d3.behavior.zoom().on("zoom", zoom))
+  .append("g");
+
 
 var force = d3.layout.force()
   .nodes(nodes)
@@ -377,6 +381,10 @@ function toggleSelect(el) {
 
 function sort_comp(a,b) {
     return $(b).data('pos') < $(a).data("pos") ? 1 : -1;
+}
+
+function zoom() {
+  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
 
 carrega_dados();
