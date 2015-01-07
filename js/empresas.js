@@ -1,3 +1,4 @@
+
 var div = d3.select("body").append("div")
   .attr("class", "tooltip")
   .style("opacity", 0);
@@ -20,11 +21,11 @@ var svg = d3.select("#grafico").append("svg")
   .attr("width", width)
   .attr("height", height)
   .append("g")
-  .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom", zoom))
+  .call(d3.behavior.zoom().scaleExtent([0.7, 8]).on("zoom", zoom))
 
 svg.append("rect")
-  .attr("width", width)
-  .attr("height", height)
+  .attr("width", width*100)
+  .attr("height", height*100)
   .attr("opacity",0)
   
 
