@@ -20,6 +20,7 @@ var empresas = ["JBS"],
 var svg = d3.select("#grafico").append("svg")
   .attr("width", width)
   .attr("height", height)
+//ZOOM
 //  .append("g")
 //  .call(d3.behavior.zoom().scaleExtent([0.7, 8]).on("zoom", zoom))
 
@@ -100,8 +101,7 @@ function muda_empresa() {
 }
 
 function dragstart(d) {
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("fixed", d.fixed = true);
+  //d3.select(this).classed("fixed", d.fixed = true);
 }
 
 function filtra_dados(deus) {
@@ -216,6 +216,8 @@ function start() {
     .style("stroke-opacity", 0.5)
 
   .call(drag);
+  
+  node.on("mousedown",function (d) { d.fixed = true })
 
   node.on('mouseover', function(d) {
 
@@ -320,31 +322,34 @@ function atualizar() {
 }
 
 function tick(e) {
-    
-  link.attr("x1", function(d) {
-      return d.source.x;
-    })
-    .attr("y1", function(d) {
-      return d.source.y;
-    })
-    .attr("x2", function(d) {
-      return d.target.x;
-    })
-    .attr("y2", function(d) {
-      return d.target.y;
-    });
 
-      node.each(cluster(10 * e.alpha * e.alpha))
+    node.each(cluster(10 * e.alpha * e.alpha))
     node.attr("cx", function(d) {
-      return Math.max(d.r, Math.min(width - d.r, d.x));
+      return d.x = Math.max(d.r, Math.min(width - d.r, d.x));
+
     })
     .attr("cy", function(d) {
-        return Math.max(d.r, Math.min(height - d.r, d.y));
+        return d.y = Math.max(d.r, Math.min(height - d.r, d.y));
     });
+    
+    link.attr("x1", function(d) {
+        return d.source.x;
+      })
+      .attr("y1", function(d) {
+        return d.source.y;
+      })
+      .attr("x2", function(d) {
+        return d.target.x;
+      })
+      .attr("y2", function(d) {
+        return d.target.y;
+      });
+    
+    
 }
 
 function cluster(alpha) {
-    alpha = alpha*1.2
+    alpha = alpha*1.1
   return function(d) {
       if (d.group != 1 ) {
     var cluster = clusters[d.partido];
@@ -387,7 +392,6 @@ function sort_comp(a,b) {
 }
 
 function zoom() {
-    d3.event.sourceEvent.stopPropagation();
   svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
 
