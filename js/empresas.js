@@ -20,24 +20,25 @@ var empresas = ["JBS"],
 var svg = d3.select("#grafico").append("svg")
   .attr("width", width)
   .attr("height", height)
-  .append("g")
-  .call(d3.behavior.zoom().scaleExtent([0.7, 8]).on("zoom", zoom))
+//  .append("g")
+//  .call(d3.behavior.zoom().scaleExtent([0.7, 8]).on("zoom", zoom))
 
 svg.append("rect")
-  .attr("width", width*100)
-  .attr("height", height*100)
-  .attr("opacity",0)
+  .attr("width", width)
+  .attr("height", height)
+  .style("stroke","#000")
+  .style("fill","#fff")
   
 
 var force = d3.layout.force()
   .nodes(nodes)
   .links(links)
-  .charge(-600)
-  .linkDistance(-50)
+  .charge(-400)
+  .linkDistance(60)
   .gravity(0.3)
-  .linkStrength(0.45)
-  .friction(0.4)
-  .chargeDistance(50000)
+  .linkStrength(0.9)
+  .friction(0.5)
+  .chargeDistance(5000)
   .size([width, height])
   .on("tick", tick);
 
@@ -124,6 +125,7 @@ function filtra_dados(deus) {
     trad_empresas[d.name] = e
   })
   novos_nodes.forEach(function(d) {
+    //faz o filtro
     var empresas_nesse_caso = []
     temp.forEach(function(ligacao) {
       if (ligacao.candidato == d.name) empresas_nesse_caso.push(ligacao.empresa)
@@ -136,6 +138,12 @@ function filtra_dados(deus) {
       }
       novos_links.push(ligacao)
     })
+  //agora coloca o raio
+    if (d.group == 1) {
+      d.r = Math.max(70 * (d.valor / 54577777), 8)
+    } else {
+      d.r = 5
+    }
   })
   return [novos_links, novos_nodes]
 }
@@ -191,11 +199,7 @@ function start() {
       return d.name
     })
     .attr("r", function(d) {
-      if (d.group == 1) {
-        return Math.max(70 * (d.valor / 54577777), 8)
-      } else {
-        return 5
-      }
+        return d.r
     })
     .style("fill", function(d) {
       //    return color(d.group);
@@ -329,20 +333,13 @@ function tick(e) {
     .attr("y2", function(d) {
       return d.target.y;
     });
-/*
-    var k = e.alpha * .1;
-    nodes.forEach(function(node) {
-      var center = nodes[node.type];
-      node.x += (center.x - node.x) * k;
-      node.y += (center.y - node.y) * k;
-    });
- */   
-    node.each(cluster(10 * e.alpha * e.alpha))
+
+      node.each(cluster(10 * e.alpha * e.alpha))
     node.attr("cx", function(d) {
-      return d.x;
+      return Math.max(d.r, Math.min(width - d.r, d.x));
     })
     .attr("cy", function(d) {
-      return d.y;
+        return Math.max(d.r, Math.min(height - d.r, d.y));
     });
 }
 
@@ -390,6 +387,7 @@ function sort_comp(a,b) {
 }
 
 function zoom() {
+    d3.event.sourceEvent.stopPropagation();
   svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
 
