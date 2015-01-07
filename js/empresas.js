@@ -20,9 +20,13 @@ var svg = d3.select("#grafico").append("svg")
   .attr("width", width)
   .attr("height", height)
   .append("g")
-  .call(d3.behavior.zoom().on("zoom", zoom))
-  .append("g");
+  .call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom", zoom))
 
+svg.append("rect")
+  .attr("width", width)
+  .attr("height", height)
+  .attr("opacity",0)
+  
 
 var force = d3.layout.force()
   .nodes(nodes)
@@ -94,6 +98,7 @@ function muda_empresa() {
 }
 
 function dragstart(d) {
+  d3.event.sourceEvent.stopPropagation();
   d3.select(this).classed("fixed", d.fixed = true);
 }
 
