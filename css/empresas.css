@@ -26,11 +26,10 @@ html,
   padding-top: 20px;
 }
 #empresas {
-  width: 30%;
-  height: 100px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 100%;  
+  padding-bottom: 10px;
+
+  position: relative;
   font-size: 80%;
 }
 div.tooltip {
