@@ -1,4 +1,3 @@
-
 var div = d3.select("body").append("div")
   .attr("class", "tooltip")
   .style("opacity", 0);
@@ -18,13 +17,13 @@ var empresas = ["JBS"],
   clusters = {};
 
 var svg = d3.select("#grafico").append("svg")
-  .attr("width", width)
-  .attr("height", height)
+    .attr("viewBox", "0 0 " + width + " " + height )
+  
 //ZOOM
 //  .append("g")
 //  .call(d3.behavior.zoom().scaleExtent([0.7, 8]).on("zoom", zoom))
 
-svg.append("rect")
+caixa = svg.append("rect")
   .attr("width", width)
   .attr("height", height)
   .style("stroke","#000")
@@ -396,3 +395,14 @@ function zoom() {
 }
 
 carrega_dados();
+d3.select(window).on("resize",resize)
+
+function resize() {
+  width = $("#grafico").width() -20,
+  height = $("#grafico").height(),
+
+  svg.attr("viewBox", "0 0 " + width + " " + height )
+  caixa.attr("width", width)
+  .attr("height", height)
+
+}
