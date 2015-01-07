@@ -20,6 +20,8 @@ html,
 }
 #main_content {
   padding-top: 20px;
+  padding-bottom: 20px;
+  
 }
 #empresas {
   width: 100%;  
