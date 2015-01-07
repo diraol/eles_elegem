@@ -28,6 +28,12 @@ caixa = svg.append("rect")
   .attr("height", height)
   .style("stroke","#000")
   .style("fill","#fff")
+  .on("click", function(d) {
+    div.transition()
+      .duration(500)
+      .style("opacity", 0);
+  });
+  
   
 
 var force = d3.layout.force()
